@@ -1,0 +1,30 @@
+---
+title: keboardingIntoTheFuture
+author: Bryce Carson (Garbage Collector GNK)
+date: 2022-02-04T01:54:28-0700
+slug: []
+categories: ["Linux", "System Administration"]
+tags: ["systemd", "XDG", "keyboard", "typing", "typography"]
+draft: yes
+params:
+  math: true
+math: true
+---
+
+I like to use [`kmonad`](https://github.com/kmonad/kmonad#-) to customize my keyboard. There's a lot of power in this Haskell application. I have several customizations:
+
+```scheme
+(defalias ᵺ–␛–⚿
+  (tap-hold 200 esc caps))
+
+(defalias ᵺ–|⃣–%>%
+  (tap-hold 250 \\ (tap-macro % > %)))
+
+(defalias ᵺ–,⃣–<-
+  (tap-hold 180 , (tap-macro < -)))
+```
+
+That won't make sense to you unless you have ever taken a look at KMonad's configuration langauge (it only *looks* like LISP), but it does three nice things.
+The `tap-hold` function takes three arguments, a time $t$, a button such as <kbd>,</kbd>, and another button.
+
+Tapping the <kbd>Caps Lock</kbd> key sends <kbd>Esc</kbd>, while holding it for 200&nbsp;ms will toggle the Caps Lock state as it normally does.
