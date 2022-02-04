@@ -1,0 +1,32 @@
+---
+title: keboardingIntoTheFuture
+author: Bryce Carson (Garbage Collector GNK)
+date: 2022-02-04T01:54:28-0700
+slug: []
+categories: ["Linux", "System Administration"]
+tags: ["systemd", "XDG", "keyboard", "typing", "typography"]
+draft: yes
+params:
+  math: true
+math: true
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>I like to use <a href="https://github.com/kmonad/kmonad#-"><code>kmonad</code></a> to customize my keyboard. There’s a lot of power in this Haskell application. I have several customizations:</p>
+<pre class="lisp"><code>(defalias ᵺ–␛–⚿
+  (tap-hold 200 esc caps))
+
+(defalias ᵺ–|–%&gt;%
+(tap-hold 250 \\ (tap-macro % &gt; %)))
+
+(defalias ᵺ–,–&lt;-
+  (tap-hold 180 , (tap-macro &lt; -)))</code></pre>
+<p>That won’t make sense to you unless you have ever taken a look at KMonad’s configuration langauge (it only <em>looks</em> like LISP), but it does three nice things.</p>
+<ul>
+<li><em>Tapping</em> the <kbd>Caps Lock</kbd> key sends <kbd>Esc</kbd>, while holding it for 200 ms will toggle the Caps Lock state as it normally does.</li>
+<li><em>Holding</em> <kbd>, <sup>&lt; </sup></kbd> gives me an assignment <kbd>&lt;-</kbd> button.</li>
+<li><em>Holding</em> <kbd> <sup>|</sup></kbd> gives me a magrittr::<kbd>%&gt;%</kbd> button.</li>
+</ul>
+<p>This is done with the <code>tap-hold</code> function, which takes three arguments: a time <span class="math inline">\(t\)</span>, a button such as <kbd>,</kbd>, and another button.</p>
