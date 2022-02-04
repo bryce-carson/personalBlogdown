@@ -1,15 +1,23 @@
 ---
 title: "keboardingIntoTheFuture"
 author: "Bryce Carson (Garbage Collector GNK)"
-date: 2022-02-04T01:54:28-0700
+date: "2022-02-04T01:54:28-0700"
 slug: []
-categories: ["Linux", "System Administration"]
-tags: ["systemd", "XDG", "keyboard", "typing", "typography"]
+categories:
+- Linux
+- System Administration
+tags:
+- systemd
+- XDG
+- keyboard
+- typing
+- typography
 params:
-  math: true
-math: true
+  math: yes
+math: yes
 ---
 
+# KMonad
 I like to use [`kmonad`](https://github.com/kmonad/kmonad#-) to customize my keyboard. There's a lot of power in this Haskell application. I have several customizations:
 
 ```lisp
@@ -30,3 +38,58 @@ That won't make sense to you unless you have ever taken a look at KMonad's confi
 - *Holding* <kbd>&#92;<sup>|</sup></kbd> gives me a magrittr::<kbd>%>%</kbd> button.
 
 This is done with the `tap-hold` function, which takes three arguments: a time $t$, a button such as <kbd>,</kbd>, and another button.
+
+# systemd and Linux Security
+I think systemd is nice. I'm not a system administrator, and I have no reason to hate on systemd as some people like to. All of the good operating systems I've used make use of it.
+
+KMonad has an upstream `kmonad.service` unit you can use, and it's pretty bones. There's not a lot to units that simply launch a process. The complications begin when you want two things:
+
+1. A user unit
+2. `uinput` hooks
+
+The beauty of KMonad is its use of uinput hooks, which one developer told me was the only "proper" way to do what KMonad is doing. It's not hacky, it's how you're supposed to modify hardware devices functioning.
+
+The ugliness is from SELinux, really. When you're the only user on a workstation and you don't have any special security considerations (I have only a few things I need to protect, like my SSH credentials for clusters) some of the nitty gritty security of Linux can be specially confusing if you've never dealt with it before.
+
+## Debugging by trial and error
+In the past I tried [Fedora Silverblue](https://silverblue.fedoraproject.org/) for only a few days. I was motivated to try it because my system had become bogged down with a lot of KDE applications and I wasn't able to remove the group package without breaking other things (this might've been fixed but I'm still unsure about it).
+
+I also wanted to be able to learn more about containers. I did not. I got a headache, even with the work done by Dirk et al for [`rocker`](https://github.com/rocker-org/rocker).
+
+I reinstalled Fedora Workstation and I've been careful to use XDG spec. directories, as a pseudo-package maintainer does (Copper is where it is at if you want to publish RPM packages without becoming a Fedora Package Maintainer which has its own set of responsibilities apart from publishing *one* package).
+
+`kmonad` goes in `${HOME}/.local/bin`, and the configuration file for the keyboard goes in `${XDG_CONFIG_HOME}/kmonad/`. Simple. Organized. Up to spec.
+
+<pre>Feb 04 03:07:52 fedora systemd[1686]: Started <span style="background-color:#FFFFFF"><font color="#1E1E1E">kmonad</font></span> keyboard config.
+Feb 04 03:07:53 fedora <span style="background-color:#FFFFFF"><font color="#1E1E1E">kmonad</font></span>[97396]: <span style="background-color:#FFFFFF"><font color="#1E1E1E">kmonad</font></span>: /dev/uinput: openFd: permission denied (Permission denied)
+Feb 04 03:07:53 fedora systemd[1686]: <span style="background-color:#FFFFFF"><font color="#1E1E1E"><b>kmonad</b></font></span><b>.service: Main process exited, code=exited, status=1/FAILURE</b>
+Feb 04 03:07:53 fedora systemd[1686]: <span style="background-color:#D7D75F"><font color="#1E1E1E"><b>kmonad</b></font></span><font color="#D7D75F"><b>.service: Failed with result &apos;exit-code&apos;.</b></font></pre>
+
+User units are not allowed to access `/dev/uinput/`! Woe is the unit. System units are likewise forbidden from accessing things in user control groups, like user configuration files or user binaries. How do we resolve this?
+
+I can install the keyboard configuration file as a symlink in `/etc/systemd/`, which is a little dirty, or I could just fully install the unit file and configuration there. Whenever I make changes to my keyboard configuration file I'll need to remember (that's not automatic!) to reinstall it in the `/etc/` subdirectory. Sucky!
+
+The RHEL 8 sysadmin documentation says I should create a `unit.d`irectory for the configuration files. This is also where you might put modified forms of a vendor unit file, like the `sshd.service` unit file if you were going to make modifications.
+
+> Unit files can be supplemented with a directory for additional configuration files. For example, to add custom configuration options to `sshd.service`, create the `sshd.service.d/custom.conf` file and insert additional directives there. For more information on configuration directories, see [Modifying existing unit files](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_basic_system_settings/assembly_working-with-systemd-unit-files_configuring-basic-system-settings#proc_modifying-existing-unit-files_assembly_working-with-systemd-unit-files).
+
+<pre>[gnkdroid@fedora ~]$ sudo mkdir /etc/systemd/system/kmonad.d/</pre>
+<pre>[gnkdroid@fedora ~]$ sudo install -t /etc/systemd/system/kmonad.d/ ~/code/keyboardBTC.kbd</pre>
+
+
+<pre>[gnkdroid@fedora ~]$ which kmonad
+~/.local/bin/kmonad
+</pre>
+
+KMonad will need to run as a system unit, so the unit file needs to be in a different location.
+
+<pre>[gnkdroid@fedora ~]$ cp -t ~/.config/systemd/system/ ~/.config/systemd/user/kmonad.service</pre>
+
+Done, but we can't enable it from here. `systemctl` is only going to look in `/etc/` for system units, which it probably shouldn't since we have `$XDG_CONFIG_HOME/systemd/system` by default. Next is to install the KMonad binary into the *site* directory, as a sysadmin would (and not as a lowly *user* like myself would install to `~/.local/` and `~/.config`).
+
+<pre>[gnkdroid@fedora ~]$ install -t /etc/systemd/system ~/.config/systemd/system/kmonad.service
+[gnkdroid@fedora ~]$ systemctl enable kmonad.service
+Created symlink /etc/systemd/system/default.target.wants/kmonad.service → /etc/systemd/system/kmonad.service.
+</pre>
+
+We've finally got our *system* systemd unit and a configuration file for it to use. I could use a symlink to the configuration file in `kmonad.d`, and I'll just need to remember to edit that as root. Quite easy in Spacemacs: <kbd>SPC</kbd><kbd>f</kbd><kbd>E</kbd>.
