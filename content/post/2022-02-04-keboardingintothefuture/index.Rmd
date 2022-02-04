@@ -26,7 +26,7 @@ I like to use [`kmonad`](https://github.com/kmonad/kmonad#-) to customize my key
 That won't make sense to you unless you have ever taken a look at KMonad's configuration langauge (it only *looks* like LISP), but it does three nice things.
 
 - *Tapping* the <kbd>Caps Lock</kbd> key sends <kbd>Esc</kbd>, while holding it for 200&nbsp;ms will toggle the Caps Lock state as it normally does.
-- *Holding* <kbd>, <sup>< </sup></kbd> gives me an assignment <kbd><-</kbd> button.
-- *Holding* <kbd>\ <sup>|</sup></kbd> gives me a magrittr::<kbd>%>%</kbd> button.
+- *Holding* <kbd>,<sup>< </sup></kbd> gives me an assignment <kbd><-</kbd> button.
+- *Holding* <kbd>&#92;<sup>|</sup></kbd> gives me a magrittr::<kbd>%>%</kbd> button.
 
 This is done with the `tap-hold` function, which takes three arguments: a time $t$, a button such as <kbd>,</kbd>, and another button.
