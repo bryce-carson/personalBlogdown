@@ -1,5 +1,5 @@
 theme: "hugo-PaperMod"
-baseURL: /
+baseURL: "/"
 languageCode: en-us
 title: garbage-collector-gnk
 
