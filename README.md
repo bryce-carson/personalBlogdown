@@ -16,7 +16,7 @@ A test for another repo, actually.
 </thead>
 <tbody>
   <tr>
-    <td><img src="https://raw.githubusercontent.com/JunaidQadirB/font-os/master/vectors/apple.svg" width="64" height="64"></td>
+    <td><a align="center><img src="https://raw.githubusercontent.com/JunaidQadirB/font-os/master/vectors/apple.svg" width="64" height="64"></a></td>
     <td><img src="https://raw.githubusercontent.com/JunaidQadirB/font-os/master/vectors/win10.svg" alt="Windows 10" width="64" height="64"></td>
     <td><img src="https://upload.wikimedia.org/wikipedia/commons/0/00/RPM_Logo.svg" alt="RPM" width="109" height="64"></td>
     <td><img src="https://raw.githubusercontent.com/JunaidQadirB/font-os/master/vectors/debian.svg" alt="Debian" width="64" height="64"></td>
