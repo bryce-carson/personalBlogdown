@@ -5,7 +5,6 @@ date: 2022-02-04T01:54:28-0700
 slug: []
 categories: ["Linux", "System Administration"]
 tags: ["systemd", "XDG", "keyboard", "typing", "typography"]
-draft: yes
 params:
   math: true
 math: true
