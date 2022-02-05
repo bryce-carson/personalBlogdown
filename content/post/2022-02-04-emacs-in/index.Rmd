@@ -25,7 +25,6 @@ I observe that without further arguments, the default format is markdown. I rena
 `R`
 <kbd>Enter</kbd>
 
-
 # Writing assistive functions in Emacs LISP
 I would like to create a modified form of `evil-surround` so that I can easily
 surround some keyboard key text with the HTML `kbd` tag. I can bind this to a
@@ -56,8 +55,8 @@ is preferrable to using some additive syntax:
 
 The above is an anti-example. There are also already conventions for displaying
 things that should be entered by keyboard: `like this`. Longer key sequences,
-regular prose, should *never* be represented as keyboard keys. An exception is
-command sequences, such as
+regular prose, should *never* be represented as keyboard keys. What should be
+represented as key sequences are command sequences, such as
 
 <p><kbd>g</kbd> <kbd>w</kbd></p>
 
@@ -67,9 +66,9 @@ characters per line).
 > `fill-column`
 
 > /Documentation:/ Column beyond which automatic line-wrapping should happen. It
-is used by filling commands, such as `fill-region' and `fill-paragraph', and by
-`auto-fill-mode', which see. See also `current-fill-column'. Interactively, you
-can set the buffer local value using C-x f.
+> is used by filling commands, such as `fill-region' and `fill-paragraph', and
+> by `auto-fill-mode', which see. See also `current-fill-column'. Interactively,
+> you can set the buffer local value using C-x f.
 
 At least for my own purposes, creating a style guide for writing about key
 sequences and adopting a more explicit visual style for keyboard keys will help
@@ -81,3 +80,49 @@ educational content.
 ## Emacs LISP function
 ## Writing style
 ## Visual style
+
+# How blogdown (sort of) works
+When `blogdown::new_post()` is run, at least in Emacs running as a daemon, the
+iESS buffer will be occupied by the function's execution until you are done
+editing that post. When you *are* done editing, you should use <kbd>C-x</kbd>
+<kbd>#</kbd> to finish editing the post with Emacs `server-edit`. You might miss
+that you are supposed to do this if you are not looking at the echo area or the
+messages buffer when you run create a new post with this function.
+
+```{r eval=FALSE}
+> new_post(title="Emacs-in")
+Waiting for Emacs...
+[1] "/home/garbagecollectorgnk/code/personalBlogdown/content/post/2022-02-04-emacs-in/index.md"
+```
+
+> `describe-function` (`C-h f` or `SPC H d f`): `server-edit`
+
+> Switch to next server editing buffer; say "Done" for current buffer. If a
+> server buffer is current, it is marked "done" and optionally saved. The buffer
+> is also killed if it did not exist before the clients asked for it. When all
+> of a client’s buffers are marked as "done", the client is notified.
+
+<kbd>C-x</kbd> <kbd>#</kbd>
+
+This is necessary when you're using Emacs as a daemon because
+`blogdown::new_post()` calls a private function, `blogdown:::open_file(file,
+open)` where `file` is a YAML-good filename made from the title of the post if a
+file is not specified. `open_file` falls back to `base::edit.file()` using
+`tryCatch` if you're not using RStudio (the call to `rstudioapi::navigateToFile`
+will fail), and `edit.file` simply uses the `$EDITOR` environment variable,
+which in my case will be emacsclient.
+
+The next thing `blogdown::new_post()` appears to do is some background work to
+create the directory for the new post in `./content/post/`; I didn't read
+`blogdown:::new_content()` very closely, after reading the terse new post
+function I didn't feel like it, but that's probably where the calls to this
+occur becaus they aren't in new post.
+
+## Uploading
+To upload the new post to our Hugo website using Netlify (if you're using these) we *may* need to knit our document. We may need to do so at least if we're using RMarkdown, aren't pushing that to the repository, or haven't changed the default extension from `.md` to `.Rmd` like [Yihui hints](https://yihui.org/en/2021/05/blogdown-knit-save/#4-consistent-behavior-with-md-posts) is common to do but unnecessary if you're not even evaluating any R code (if you're always using `eval=FALSE}`).
+
+Perhaps I made the wrong decision to blindly choose Rmd as well…
+
+Anyways, using `blogdown::build_site()`, `check_site()`, and `rmarkdown::knitr()` we get our HTML and then run `check_site()` again. No errors, no warnings, no TODOs. Commit (no sin by) using Magit, push to remote.origin with SSH and we should see the post become live on the Netlify site in a just a moment!
+
+I do recommend setting up SSH keys. They make life a lot easier, and more secure. When I made the first two posts (a test and "keyboardingIntoTheFuture") in RStudio I was annoyed that even though I used the recommend functions `use_github` (I think) it wouldn't rememeber my personal token for more than about half an hour and I would need to enter it again upon a push. With an SSH key this will never occur again. :)
