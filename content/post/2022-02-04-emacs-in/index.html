@@ -1,35 +1,53 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+---
+title: "Emacs-in"
+author: 'Garbage Collector GNK'
+date: '2022-02-04'
+slug: []
+categories: ["R", "Emacs"]
+tags: ["R", "Emacs"]
+---
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
-<head>
-<title>index.html</title>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 
-</head>
-
-<body>
-
-<h1 id="using-a-free-implementation-of-vi-is-but-a-penance-or-i-should-use-spc-more">Using a free implementation of <code>vi</code> is but a penance: or I should use <kbd>SPC</kbd> more</h1>
-<p>This is the first attempt I have made to create a post from Emacs and also to understand how blogdown actually works. The other first two posts I created, one which was a garbage test post, and the other my first actual post, were made in RStudio. Sinful!</p>
-<ol type="1">
+<div id="using-a-free-implementation-of-vi-is-but-a-penance-or-i-should-use-spc-more" class="section level1">
+<h1>Using a free implementation of <code>vi</code> is but a penance: or I should use <kbd>SPC</kbd> more</h1>
+<p>This is the first attempt I have made to create a post from Emacs and also to
+understand how blogdown actually works. The other first two posts I created, one
+which was a garbage test post, and the other my first actual post, were made in
+RStudio. Sinful!</p>
+<ol style="list-style-type: decimal">
 <li>Open Emacs (<code>emacsclient</code>)</li>
 <li><kbd>Meta</kbd><kbd>x</kbd> <code>R</code></li>
 <li>Load <code>blogdown</code> and <code>tidyverse</code> (even though I’m not doing any actual R work, so I didn’t need to load the tidyverse. It’s just habit)</li>
 <li><code>{r}new_post(title="Emacs-in")</code></li>
 </ol>
 <p>I observe that without further arguments, the default format is markdown. I rename the file to make it an RMarkdown file:</p>
-<p><kbd>SPC</kbd> <kbd>f</kbd> <kbd>R</kbd> <kbd>C-b</kbd> <kbd>C-b</kbd> <code>R</code> <kbd>Enter</kbd></p>
-<h1 id="writing-assistive-functions-in-emacs-lisp">Writing assistive functions in Emacs LISP</h1>
-<p>I would like to create a modified form of <code>evil-surround</code> so that I can easily surround some keyboard key text with the HTML <code>kbd</code> tag. I can bind this to a key, in some map (probably only <code>ess-r-mode-map</code>), or I might look into function advice and create some template text.</p>
-<p>For instance, rather than binding it to a key of its own, I might extend <code>evil-surround</code> such that when a work is surrounded by KBD, like <code>kbdM-xkbd</code> the surrounding tag is converted to the actual HTML: <code>&lt;kbd&gt;</code> and <code>&lt;/kbd&gt;</code>.</p>
+<p><kbd>SPC</kbd> <kbd>f</kbd> <kbd>R</kbd>
+<kbd>C-b</kbd> <kbd>C-b</kbd>
+<code>R</code>
+<kbd>Enter</kbd></p>
+</div>
+<div id="writing-assistive-functions-in-emacs-lisp" class="section level1">
+<h1>Writing assistive functions in Emacs LISP</h1>
+<p>I would like to create a modified form of <code>evil-surround</code> so that I can easily
+surround some keyboard key text with the HTML <code>kbd</code> tag. I can bind this to a
+key, in some map (probably only <code>ess-r-mode-map</code>), or I might look into function
+advice and create some template text.</p>
+<p>For instance, rather than binding it to a key of its own, I might extend
+<code>evil-surround</code> such that when a work is surrounded by KBD, like <code>kbdM-xkbd</code> the
+surrounding tag is converted to the actual HTML: <code>&lt;kbd&gt;</code> and <code>&lt;/kbd&gt;</code>.</p>
 <p>Both would be fine.</p>
-<p>I’d prefer to use <a href="http://www.miragecraft.com/projects/keymason.html">KeyMason</a>’s wonderful CSS and JavaScript to supersede the CSS I got from Mozilla Developer Network (MDN is indispensible when you’re learning anything related to the web; the writing is excellent). KeyMason shows individual keys very nicely.</p>
-<p>When including this typographic flair, how should key combinations be displayed? I think displaying it like a word, where each key is not separated by a space, is preferrable to using some additive syntax:</p>
+<p>I’d prefer to use
+<a href="http://www.miragecraft.com/projects/keymason.html">KeyMason</a>’s wonderful CSS
+and JavaScript to supersede the CSS I got from Mozilla Developer Network (MDN is
+indispensible when you’re learning anything related to the web; the writing is
+excellent). KeyMason shows individual keys very nicely.</p>
+<p>When including this typographic flair, how should key combinations be displayed?
+I think displaying it like a word, where each key is not separated by a space,
+is preferrable to using some additive syntax:</p>
 <p>
-<kbd>Shift</kbd><span class="math inline">+</span><kbd>I</kbd>
+<kbd>Shift</kbd><span class="math inline">\(+\)</span><kbd>I</kbd>
 </p>
 <p>
 <kbd>a</kbd><kbd>m</kbd>
@@ -43,22 +61,87 @@
 <p>
 <kbd>n</kbd><kbd>u</kbd><kbd>m</kbd><kbd>b</kbd><kbd>e</kbd><kbd>r</kbd>
 </p>
-<p>The above is an anti-example. There are also already conventions for displaying things that should be entered by keyboard: <code>like this</code>. Longer key sequences, regular prose, should <em>never</em> be represented as keyboard keys. An exception is command sequences, such as</p>
+<p>The above is an anti-example. There are also already conventions for displaying
+things that should be entered by keyboard: <code>like this</code>. Longer key sequences,
+regular prose, should <em>never</em> be represented as keyboard keys. What should be
+represented as key sequences are command sequences, such as</p>
 <p>
 <kbd>g</kbd> <kbd>w</kbd>
 </p>
-<p>to summon <code>evil-fill</code> (which wraps text to the <code>fill-column</code> variable width of characters per line).</p>
+<p>to summon <code>evil-fill</code> (which wraps text to the <code>fill-column</code> variable width of
+characters per line).</p>
 <blockquote>
 <p><code>fill-column</code></p>
 </blockquote>
 <blockquote>
-<p>/Documentation:/ Column beyond which automatic line-wrapping should happen. It is used by filling commands, such as <code>fill-region' and</code>fill-paragraph’, and by <code>auto-fill-mode', which see. See also</code>current-fill-column’. Interactively, you can set the buffer local value using C-x f.</p>
+<p>/Documentation:/ Column beyond which automatic line-wrapping should happen. It
+is used by filling commands, such as <code>fill-region' and</code>fill-paragraph’, and
+by <code>auto-fill-mode', which see. See also</code>current-fill-column’. Interactively,
+you can set the buffer local value using C-x f.</p>
 </blockquote>
-<p>At least for my own purposes, creating a style guide for writing about key sequences and adopting a more explicit visual style for keyboard keys will help me discuss things like what button I have defined in KMonad or some sequence of keys that I press to run a command to get my work done when I am writing educational content.</p>
-<h1 id="progress-towards-the-stated-goals">Progress towards the stated goals</h1>
-<h2 id="emacs-lisp-function">Emacs LISP function</h2>
-<h2 id="writing-style">Writing style</h2>
-<h2 id="visual-style">Visual style</h2>
+<p>At least for my own purposes, creating a style guide for writing about key
+sequences and adopting a more explicit visual style for keyboard keys will help
+me discuss things like what button I have defined in KMonad or some sequence of
+keys that I press to run a command to get my work done when I am writing
+educational content.</p>
+</div>
+<div id="progress-towards-the-stated-goals" class="section level1">
+<h1>Progress towards the stated goals</h1>
+<div id="emacs-lisp-function" class="section level2">
+<h2>Emacs LISP function</h2>
+</div>
+<div id="writing-style" class="section level2">
+<h2>Writing style</h2>
+</div>
+<div id="visual-style" class="section level2">
+<h2>Visual style</h2>
+</div>
+</div>
+<div id="how-blogdown-sort-of-works" class="section level1">
+<h1>How blogdown (sort of) works</h1>
+<p>When <code>blogdown::new_post()</code> is run, at least in Emacs running as a daemon, the
+iESS buffer will be occupied by the function’s execution until you are done
+editing that post. When you <em>are</em> done editing, you should use <kbd>C-x</kbd>
+<kbd>#</kbd> to finish editing the post with Emacs <code>server-edit</code>. You might miss
+that you are supposed to do this if you are not looking at the echo area or the
+messages buffer when you run create a new post with this function.</p>
+<pre class="r"><code>&gt; new_post(title=&quot;Emacs-in&quot;)
+Waiting for Emacs...
+[1] &quot;/home/garbagecollectorgnk/code/personalBlogdown/content/post/2022-02-04-emacs-in/index.md&quot;</code></pre>
+<blockquote>
+<p><code>describe-function</code> (<code>C-h f</code> or <code>SPC H d f</code>): <code>server-edit</code></p>
+</blockquote>
+<blockquote>
+<p>Switch to next server editing buffer; say “Done” for current buffer. If a
+server buffer is current, it is marked “done” and optionally saved. The buffer
+is also killed if it did not exist before the clients asked for it. When all
+of a client’s buffers are marked as “done”, the client is notified.</p>
+</blockquote>
+<p><kbd>C-x</kbd> <kbd>#</kbd></p>
+<p>This is necessary when you’re using Emacs as a daemon because
+<code>blogdown::new_post()</code> calls a private function, <code>blogdown:::open_file(file, open)</code> where <code>file</code> is a YAML-good filename made from the title of the post if a
+file is not specified. <code>open_file</code> falls back to <code>base::edit.file()</code> using
+<code>tryCatch</code> if you’re not using RStudio (the call to <code>rstudioapi::navigateToFile</code>
+will fail), and <code>edit.file</code> simply uses the <code>$EDITOR</code> environment variable,
+which in my case will be emacsclient.</p>
+<p>The next thing <code>blogdown::new_post()</code> appears to do is some background work to
+create the directory for the new post in <code>./content/post/</code>; I didn’t read
+<code>blogdown:::new_content()</code> very closely, after reading the terse new post
+function I didn’t feel like it, but that’s probably where the calls to this
+occur becaus they aren’t in new post.</p>
+<div id="uploading" class="section level2">
+<h2>Uploading</h2>
+<p>To upload the new post to our Hugo website using Netlify (if you’re using these) we <em>may</em> need to knit our document. We may need to do so at least if we’re using RMarkdown, aren’t pushing that to the repository, or haven’t changed the default extension from <code>.md</code> to <code>.Rmd</code> like <a href="https://yihui.org/en/2021/05/blogdown-knit-save/#4-consistent-behavior-with-md-posts">Yihui hints</a> is common to do but unnecessary if you’re not even evaluating any R code (if you’re always using <code>eval=FALSE}</code>).</p>
+<p>Perhaps I made the wrong decision to blindly choose Rmd as well…</p>
+<p>Anyways, using <code>blogdown::build_site()</code>, <code>check_site()</code>, and <code>rmarkdown::knitr()</code> we get our HTML and then run <code>check_site()</code> again. No errors, no warnings, no TODOs. Commit (no sin by) using Magit, push to remote.origin with SSH and we should see the post become live on the Netlify site in a just a moment!</p>
+<p>I do recommend setting up SSH keys. They make life a lot easier, and more secure. When I made the first two posts (a test and “keyboardingIntoTheFuture”) in RStudio I was annoyed that even though I used the recommend functions <code>use_github</code> (I think) it wouldn’t rememeber my personal token for more than about half an hour and I would need to enter it again upon a push. With an SSH key this will never occur again. :) At least if you get your remote URL set correctly: it needs to be <code>ssh://git@github.com/USERNAME/REPOSITORY</code>, you cannot just change from <code>https</code> TO <code>ssh</code> if you have a remote configured already. Be sure to type <code>ssh://git@</code> when you’re prending and ensure the URL is then of the form just mentioned.</p>
+<p>…this is why we always run <code>check_site()</code>!:</p>
+<pre class="r"><code>● [TODO] Found 1 R Markdown file to update by re-rendering:
 
-</body>
-</html>
+  content/post/2022-02-04-emacs-in/index.Rmd
+
+  To update a file, re-knit or use blogdown::build_site(build_rmd = &#39;timestamp&#39;)</code></pre>
+<pre class="r"><code>build_site(build_rmd = &#39;timestamp&#39;)</code></pre>
+<p>We do <em>not</em> need to knit ourselves, we can just build (the) site using blogdown and forget about it, specially so if there is no R code to evaluate (a simple Rmd to md conversion alone using knitr without any real knitting).</p>
+</div>
+</div>
