@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>index.html</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+</head>
+
+<body>
+
+<h1 id="using-a-free-implementation-of-vi-is-but-a-penance-or-i-should-use-spc-more">Using a free implementation of <code>vi</code> is but a penance: or I should use <kbd>SPC</kbd> more</h1>
+<p>This is the first attempt I have made to create a post from Emacs and also to understand how blogdown actually works. The other first two posts I created, one which was a garbage test post, and the other my first actual post, were made in RStudio. Sinful!</p>
+<ol type="1">
+<li>Open Emacs (<code>emacsclient</code>)</li>
+<li><kbd>Meta</kbd><kbd>x</kbd> <code>R</code></li>
+<li>Load <code>blogdown</code> and <code>tidyverse</code> (even though I’m not doing any actual R work, so I didn’t need to load the tidyverse. It’s just habit)</li>
+<li><code>{r}new_post(title="Emacs-in")</code></li>
+</ol>
+<p>I observe that without further arguments, the default format is markdown. I rename the file to make it an RMarkdown file:</p>
+<p><kbd>SPC</kbd> <kbd>f</kbd> <kbd>R</kbd> <kbd>C-b</kbd> <kbd>C-b</kbd> <code>R</code> <kbd>Enter</kbd></p>
+<h1 id="writing-assistive-functions-in-emacs-lisp">Writing assistive functions in Emacs LISP</h1>
+<p>I would like to create a modified form of <code>evil-surround</code> so that I can easily surround some keyboard key text with the HTML <code>kbd</code> tag. I can bind this to a key, in some map (probably only <code>ess-r-mode-map</code>), or I might look into function advice and create some template text.</p>
+<p>For instance, rather than binding it to a key of its own, I might extend <code>evil-surround</code> such that when a work is surrounded by KBD, like <code>kbdM-xkbd</code> the surrounding tag is converted to the actual HTML: <code>&lt;kbd&gt;</code> and <code>&lt;/kbd&gt;</code>.</p>
+<p>Both would be fine.</p>
+<p>I’d prefer to use <a href="http://www.miragecraft.com/projects/keymason.html">KeyMason</a>’s wonderful CSS and JavaScript to supersede the CSS I got from Mozilla Developer Network (MDN is indispensible when you’re learning anything related to the web; the writing is excellent). KeyMason shows individual keys very nicely.</p>
+<p>When including this typographic flair, how should key combinations be displayed? I think displaying it like a word, where each key is not separated by a space, is preferrable to using some additive syntax:</p>
+<p>
+<kbd>Shift</kbd><span class="math inline">+</span><kbd>I</kbd>
+</p>
+<p>
+<kbd>a</kbd><kbd>m</kbd>
+</p>
+<p>
+<kbd>n</kbd><kbd>o</kbd><kbd>t</kbd>
+</p>
+<p>
+<kbd>a</kbd>
+</p>
+<p>
+<kbd>n</kbd><kbd>u</kbd><kbd>m</kbd><kbd>b</kbd><kbd>e</kbd><kbd>r</kbd>
+</p>
+<p>The above is an anti-example. There are also already conventions for displaying things that should be entered by keyboard: <code>like this</code>. Longer key sequences, regular prose, should <em>never</em> be represented as keyboard keys. An exception is command sequences, such as</p>
+<p>
+<kbd>g</kbd> <kbd>w</kbd>
+</p>
+<p>to summon <code>evil-fill</code> (which wraps text to the <code>fill-column</code> variable width of characters per line).</p>
+<blockquote>
+<p><code>fill-column</code></p>
+</blockquote>
+<blockquote>
+<p>/Documentation:/ Column beyond which automatic line-wrapping should happen. It is used by filling commands, such as <code>fill-region' and</code>fill-paragraph’, and by <code>auto-fill-mode', which see. See also</code>current-fill-column’. Interactively, you can set the buffer local value using C-x f.</p>
+</blockquote>
+<p>At least for my own purposes, creating a style guide for writing about key sequences and adopting a more explicit visual style for keyboard keys will help me discuss things like what button I have defined in KMonad or some sequence of keys that I press to run a command to get my work done when I am writing educational content.</p>
+<h1 id="progress-towards-the-stated-goals">Progress towards the stated goals</h1>
+<h2 id="emacs-lisp-function">Emacs LISP function</h2>
+<h2 id="writing-style">Writing style</h2>
+<h2 id="visual-style">Visual style</h2>
+
+</body>
+</html>

@@ -5,7 +5,10 @@
 .Renviron
 /public/
 /resources/
-\.Rmd$
-\.Rmarkdown$
+.Rmd
+.Rmarkdown
 _cache$
 .private
+.DS_Store
+Thumbs.db
+.hugo_build.lock

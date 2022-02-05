@@ -1,5 +1,5 @@
 theme: "hugo-PaperMod"
-baseURL: "/"
+baseURL: "https://garbage-collector-gnk.netlify.app/"
 languageCode: en-us
 title: garbage-collector-gnk
 
@@ -9,3 +9,5 @@ markup:
       unsafe: true
 params:
   math: true
+
+ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]

@@ -1,0 +1,83 @@
+---
+title: "Emacs-in"
+author: 'Garbage Collector GNK'
+date: '2022-02-04'
+slug: []
+categories: ["R", "Emacs"]
+tags: ["R", "Emacs"]
+---
+
+# Using a free implementation of `vi` is but a penance: or I should use <kbd>SPC</kbd> more
+This is the first attempt I have made to create a post from Emacs and also to
+understand how blogdown actually works. The other first two posts I created, one
+which was a garbage test post, and the other my first actual post, were made in
+RStudio. Sinful!
+
+1. Open Emacs (`emacsclient`)
+2. <kbd>Meta</kbd><kbd>x</kbd> `R`
+3. Load `blogdown` and `tidyverse` (even though I'm not doing any actual R work, so I didn't need to load the tidyverse. It's just habit)
+4. ```{r}new_post(title="Emacs-in")```
+
+I observe that without further arguments, the default format is markdown. I rename the file to make it an RMarkdown file:
+
+<kbd>SPC</kbd> <kbd>f</kbd> <kbd>R</kbd>
+<kbd>C-b</kbd> <kbd>C-b</kbd>
+`R`
+<kbd>Enter</kbd>
+
+
+# Writing assistive functions in Emacs LISP
+I would like to create a modified form of `evil-surround` so that I can easily
+surround some keyboard key text with the HTML `kbd` tag. I can bind this to a
+key, in some map (probably only `ess-r-mode-map`), or I might look into function
+advice and create some template text.
+
+For instance, rather than binding it to a key of its own, I might extend
+`evil-surround` such that when a work is surrounded by KBD, like `kbdM-xkbd` the
+surrounding tag is converted to the actual HTML: `<kbd>` and `</kbd>`.
+
+Both would be fine.
+
+I'd prefer to use
+[KeyMason](http://www.miragecraft.com/projects/keymason.html)'s wonderful CSS
+and JavaScript to supersede the CSS I got from Mozilla Developer Network (MDN is
+indispensible when you're learning anything related to the web; the writing is
+excellent). KeyMason shows individual keys very nicely.
+
+When including this typographic flair, how should key combinations be displayed?
+I think displaying it like a word, where each key is not separated by a space,
+is preferrable to using some additive syntax:
+
+<p><kbd>Shift</kbd>$+$<kbd>I</kbd></p>
+<p><kbd>a</kbd><kbd>m</kbd></p>
+<p><kbd>n</kbd><kbd>o</kbd><kbd>t</kbd></p>
+<p><kbd>a</kbd></p>
+<p><kbd>n</kbd><kbd>u</kbd><kbd>m</kbd><kbd>b</kbd><kbd>e</kbd><kbd>r</kbd></p>
+
+The above is an anti-example. There are also already conventions for displaying
+things that should be entered by keyboard: `like this`. Longer key sequences,
+regular prose, should *never* be represented as keyboard keys. An exception is
+command sequences, such as
+
+<p><kbd>g</kbd> <kbd>w</kbd></p>
+
+to summon `evil-fill` (which wraps text to the `fill-column` variable width of
+characters per line).
+
+> `fill-column`
+
+> /Documentation:/ Column beyond which automatic line-wrapping should happen. It
+is used by filling commands, such as `fill-region' and `fill-paragraph', and by
+`auto-fill-mode', which see. See also `current-fill-column'. Interactively, you
+can set the buffer local value using C-x f.
+
+At least for my own purposes, creating a style guide for writing about key
+sequences and adopting a more explicit visual style for keyboard keys will help
+me discuss things like what button I have defined in KMonad or some sequence of
+keys that I press to run a command to get my work done when I am writing
+educational content.
+
+# Progress towards the stated goals
+## Emacs LISP function
+## Writing style
+## Visual style
