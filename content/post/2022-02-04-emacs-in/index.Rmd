@@ -76,10 +76,21 @@ me discuss things like what button I have defined in KMonad or some sequence of
 keys that I press to run a command to get my work done when I am writing
 educational content.
 
-# Progress towards the stated goals
-## Emacs LISP function
-## Writing style
-## Visual style
+<!-- # Progress towards the stated goals -->
+<!-- ## Emacs LISP function -->
+<!-- ## Writing style -->
+<!-- ## Visual style -->
+
+## How I use evil to just get by quicker
+Without taking the time to write some Emacs LISP, debug it, bind it, and hope that I actually use it often enough to justify the time, here is how I get by:
+
+- Put each key label on its own line
+- Highlight the lines using visual mode <kbd>Shift</kbd><kbd>v</kbd>
+- <kbd>Shift</kbd><kbd>I</kbd> then type the opening `<kbd>` tag
+- Highlight the lines again
+- <kbd>Shift</kbd><kbd>a</kbd> then type the closing `</kbd>` tag
+
+Done! Modal editing power brought to Emacs. Evil is wonderful, but it's so sinful, ain't it?
 
 # How blogdown (sort of) works
 When `blogdown::new_post()` is run, at least in Emacs running as a daemon, the
