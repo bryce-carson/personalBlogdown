@@ -48,10 +48,10 @@ I think displaying it like a word, where each key is not separated by a space,
 is preferrable to using some additive syntax:
 
 <p><kbd>Shift</kbd>$+$<kbd>I</kbd></p>
-<p><kbd>a</kbd><kbd>m</kbd></p>
-<p><kbd>n</kbd><kbd>o</kbd><kbd>t</kbd></p>
+<p><kbd>a</kbd> <kbd>m</kbd></p>
+<p><kbd>n</kbd> <kbd>o</kbd> <kbd>t</kbd></p>
 <p><kbd>a</kbd></p>
-<p><kbd>n</kbd><kbd>u</kbd><kbd>m</kbd><kbd>b</kbd><kbd>e</kbd><kbd>r</kbd></p>
+<p><kbd>n</kbd> <kbd>u</kbd> <kbd>m</kbd> <kbd>b</kbd> <kbd>e</kbd> <kbd>r</kbd></p>
 
 The above is an anti-example. There are also already conventions for displaying
 things that should be entered by keyboard: `like this`. Longer key sequences,
