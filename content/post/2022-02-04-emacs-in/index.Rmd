@@ -126,3 +126,15 @@ Perhaps I made the wrong decision to blindly choose Rmd as well…
 Anyways, using `blogdown::build_site()`, `check_site()`, and `rmarkdown::knitr()` we get our HTML and then run `check_site()` again. No errors, no warnings, no TODOs. Commit (no sin by) using Magit, push to remote.origin with SSH and we should see the post become live on the Netlify site in a just a moment!
 
 I do recommend setting up SSH keys. They make life a lot easier, and more secure. When I made the first two posts (a test and "keyboardingIntoTheFuture") in RStudio I was annoyed that even though I used the recommend functions `use_github` (I think) it wouldn't rememeber my personal token for more than about half an hour and I would need to enter it again upon a push. With an SSH key this will never occur again. :)
+
+…this is why we always run `check_site()`!:
+
+```{r eval=FALSE}
+● [TODO] Found 1 R Markdown file to update by re-rendering:
+
+  content/post/2022-02-04-emacs-in/index.Rmd
+
+  To update a file, re-knit or use blogdown::build_site(build_rmd = 'timestamp')
+```
+
+We do *not* need to knit ourselves, we can just build (the) site using blogdown and forget about it, specially so if there is no R code to evaluate (a simple Rmd to md conversion alone using knitr without any real knitting).
