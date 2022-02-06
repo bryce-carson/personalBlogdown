@@ -7,7 +7,7 @@ categories: ["Population Genetics", "Genetics", "Programming"]
 tags: ["Debian", "Ubuntu", "Packaging", "Development"]
 ShowToC: true
 editPost:
-  URL: "https://github.com/bryce-carson/personalBlogdown/content"
+  URL: "https://github.com/bryce-carson/personalBlogdown/content/tree/main"
   Text: "Suggest changes to this post"
   appendFilePath: true
 ---
@@ -25,7 +25,7 @@ documentation).
 -------------------------------------------------------------------------------
 
 # *SLiM: Selection on Linked Mutations* Simulation Framework
-![SLiMgui Screenshot](content/post/2022-02-05-packaging-slim-for-debian-and-ubuntu-a-difficult-process/img/slimGUI-screenshot.png)
+![SLiMgui Screenshot](img/slimGUI-screenshot.png)
 
 # Debian Packaging
 ## Ubuntu Packaging
