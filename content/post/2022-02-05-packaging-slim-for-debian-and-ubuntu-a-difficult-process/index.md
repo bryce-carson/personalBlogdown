@@ -10,7 +10,6 @@ editPost:
   URL: "https://github.com/bryce-carson/personalBlogdown/content"
   Text: "Suggest changes to this post"
   appendFilePath: true
-draft: true
 ---
 
 # Previous Experience Packaging
