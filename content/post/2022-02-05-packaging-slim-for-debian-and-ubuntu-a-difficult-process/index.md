@@ -7,7 +7,7 @@ categories: ["Population Genetics", "Genetics", "Programming"]
 tags: ["Debian", "Ubuntu", "Packaging", "Development"]
 ShowToC: true
 editPost:
-  URL: "https://github.com/bryce-carson/personalBlogdown/content/tree/main"
+  URL: "https://github.com/bryce-carson/personalBlogdown/tree/main/content"
   Text: "Suggest changes to this post"
   appendFilePath: true
 ---
