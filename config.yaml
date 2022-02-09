@@ -9,5 +9,15 @@ markup:
       unsafe: true
 params:
   math: true
+  homeInfoParams:
+  	Title: "Garbage Collector GNK"
+		Content: >
+			Welcome to my blog.
+			
+			- **GNK** is a "gonk" droid in Star Wars. The garbage can one. :)
+			
+			- Check out my GitHub!
+			
+			- I'm using the [PaperMod](https://adityatelange.github.io/hugo-PaperMod/) Hugo theme.
 
 ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
