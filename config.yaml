@@ -19,5 +19,9 @@ params:
 			- Check out my GitHub!
 			
 			- I'm using the [PaperMod](https://adityatelange.github.io/hugo-PaperMod/) Hugo theme.
+	
+	socialIcons:
+		- name: github
+			url: "https://github.com/bryce-carson/"
 
 ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
