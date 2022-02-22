@@ -11,7 +11,7 @@
 #+HUGO_CATEGORIES: Linux
 #+HUGO_MENU: :main "main" :weight 2001
 
-#+HUGO_DRAFT: true
+#+HUGO_DRAFT: false
 
 * Preamble
   :PROPERTIES:

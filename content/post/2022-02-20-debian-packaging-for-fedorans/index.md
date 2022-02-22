@@ -2,10 +2,10 @@
 title = "Debian Packaging for Fedorans"
 author = ["Bryce Carson"]
 date = 2020-02-21
-lastmod = 2022-02-21T18:42:16-07:00
+lastmod = 2022-02-21T19:03:17-07:00
 tags = ["Debian", "Fedora", "Packaging"]
 categories = ["Linux"]
-draft = true
+draft = false
 weight = 2001
 +++
 
